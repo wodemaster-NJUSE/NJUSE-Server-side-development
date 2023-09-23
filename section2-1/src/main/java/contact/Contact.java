@@ -1,4 +1,4 @@
-package example;
+package contact;
 
 import java.util.Objects;
 

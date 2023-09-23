@@ -1,6 +1,10 @@
 package example;
 
 import com.github.javafaker.Faker;
+import contact.Contact;
+import contact.ContactConfig;
+import contact.ContactRepository;
+import contact.ContactService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
