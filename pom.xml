@@ -12,9 +12,7 @@
 
     <modules>
         <module>section2-1</module>
-        <module>section2-2</module>
-        <module>section2-3</module>
-        <module>section2-4</module>
+
     </modules>
 
 </project>

@@ -14,3 +14,18 @@ mvn clear install重新安装依赖才不爆红。
 这次作业我的想法是让ContactConfig不能注入aop而ContactConfigAOP能注入aop，这样只有aop相关测试才会调用aop功能。这一步我选择了ContactConfig用@Bean方式注入，而ContactConfigAOP使用@ComponentScan方式注入，@Bean有较高自主性。
 
 我的aop实现主要是在初始化的时候就构建固定数据缓存，并且获取当前测试的contactservice，在执行到cutpoint前把数据写入contactService缓存，getAll判断缓存不为空则返回缓存里的数据，否则（第一次作业测试）就返回数据库里的数据。然后还得把contactService的缓存设为空，否则影响接下来的测试。
+
+
+
+第四次作业：导入validation相关包爆红：在pom.xm;添加相关依赖然后重新引入。
+
+<dependency>
+    <groupId>org.hibernate.validator</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>6.0.0.Final</version>
+</dependency>
+
+生成html页面的过程叫渲染
+
+contactForm.html只需要照ppt上的写就行，新增contactController、contactApplication
+
