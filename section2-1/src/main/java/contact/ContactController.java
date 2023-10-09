@@ -9,22 +9,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Slf4j
 @Controller
 public class ContactController {
 
+    private final ContactService contactService;
 
-    private List<Contact> contacts = new ArrayList<>();
-
-
+    // Inject ContactService via constructor
+    public ContactController(ContactService contactService) {
+        this.contactService = contactService;
+    }
+    //    需要用’/‘指定根页面，输入’localhost:8080‘就可以访问页面了
+    @GetMapping("/")
+    public String showContacts() {
+        return "contactForm";
+    }
     @ModelAttribute("contact")
     public Contact contact() {
         return new Contact();
     }
-
 
     @PostMapping("/addContact")
     public String submitContactForm(
@@ -33,24 +36,16 @@ public class ContactController {
             Model model) {
         log.info(String.valueOf(bindingResult.hasErrors()));
         if (!bindingResult.hasErrors()) {
-            contacts.add(contact);
-            model.addAttribute("contacts", contacts);
-            model.addAttribute("contact", new Contact()); // 清空表单
+            contactService.add(contact); // Save to the database
+            model.addAttribute("contacts", contactService.getAll()); // Retrieve from the database
+            model.addAttribute("contact", new Contact()); // Clear the form
         }
         return "contactForm";
     }
 
-    //    需要用’/‘指定根页面，输入’localhost:8080‘就可以访问页面了
-    @GetMapping("/")
-    public String showContacts() {
+    @GetMapping("/showContacts") // Change the mapping to "/contacts/showContacts"
+    public String show(Model model) {
+        model.addAttribute("contacts", contactService.getAll());
         return "contactForm";
     }
-
-//      如果你指定“addContact”的话，输入’localhost:8080/addContact‘就可以访问页面了，所以其实这个方法没必要，可注释掉
-//    @GetMapping("/addContact")
-//    public String showContactForm(Model model) {
-//        model.addAttribute("contacts", contacts);
-//        return "contactForm";
-//    }
-
 }

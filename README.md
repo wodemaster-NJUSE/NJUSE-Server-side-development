@@ -29,3 +29,15 @@ mvn clear install重新安装依赖才不爆红。
 
 contactForm.html只需要照ppt上的写就行，新增contactController、contactApplication
 
+
+
+第五次作业使用h2进行数据持久化。
+
+添加application.yml里的对数据库的设置
+
+并且添加jpa使用h2数据库的依赖
+
+<!-- Spring Data JPA --><dependency>    <groupId>org.springframework.boot</groupId>    <artifactId>spring-boot-starter-data-jpa</artifactId></dependency><!-- H2 Database --><dependency>    <groupId>com.h2database</groupId>    <artifactId>h2</artifactId>    <scope>runtime</scope></dependency>
+
+使用了jpa的设置可以直接把repositoryimpl删除了，对contact做了实体化，还需要把contactServiceAspect注释掉，不然无法在web界面正确显示添加的联系人信息，修改了controller的存储设置，使用repository存储到h2数据库。
+
