@@ -1,18 +1,16 @@
 package contact;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
+@Document
 public class Contact {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Use automatic ID generation
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Use automatic ID generation
+    private String id;
 
     @NotNull
     @Size(min=1, message = "名至少一个")

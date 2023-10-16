@@ -41,3 +41,4 @@ contactForm.html只需要照ppt上的写就行，新增contactController、conta
 
 使用了jpa的设置可以直接把repositoryimpl删除了，对contact做了实体化，还需要把contactServiceAspect注释掉，不然无法在web界面正确显示添加的联系人信息，修改了controller的存储设置，使用repository存储到h2数据库。
 
+第六次作业：pom添加mongodb配置，下载mongodbshell，把上次作业的h2数据库撤销，为contact类添加@Document，记得改id为string，添加application.properties添加数据库链接。然后到mongodb的bin里使用cmd，先<mongod --dbpath 你的数据存放地址>开启监听，再打开mongosh（直接回车就行），这个时候运行contact，往里面添加数据即可。

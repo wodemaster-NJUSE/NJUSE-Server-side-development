@@ -1,7 +1,0 @@
-#tag::setDatabaseName[]
-spring:
-  datasource:
-    generate-unique-name: false
-    name: test
-
-#end::setDatabaseName[]
