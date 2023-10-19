@@ -55,3 +55,8 @@ contactForm.html只需要照ppt上的写就行，新增contactController、conta
 
 （其实是因为parent版本不一样导致的，跟他用一个版本的parent就行了）
 
+添加
+
+内存数据库依赖即可，照常使用mongodb，默认登陆界面只需要添加security依赖，设置密码不加密只需要让encoder返回 NoOpPasswordEncoder.getInstance()
+
+剩下的就按照他说的就行了。
