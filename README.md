@@ -5,7 +5,11 @@
 
 第一次的作业比较简单，只需要用老师给你的代码跑一遍就行，跟着ppt做就好。
 
+
+
 第二次的作业是依赖注入，主要介绍了三种依赖注入方法：自动注入，javaconfig，xml方式。我这里选择的是自动注入方式，其中contactRepositoryImpl，contactServiceImpl，contactConfig是我完成的的类，两个impl分别实现各自的接口构成组件，config作为入口对组件进行组装。
+
+
 
 第三次作业是AOP，被自己环境配置坑的挺惨（，写aop相关代码的时候发现无法import  aop的包，得现在pom.xml中添加：<dependency>    <groupId>org.springframework.boot</groupId>    <artifactId>spring-boot-starter-aop</artifactId>    <version>2.5.4</version></dependency><!-- AspectJ依赖 --><dependency><groupId>org.aspectj</groupId><artifactId>aspectjrt</artifactId><version>1.9.7</version> <!-- 使用适当的版本 --></dependency><dependency>    <groupId>org.aspectj</groupId>    <artifactId>aspectjweaver</artifactId>    <version>1.9.19</version></dependency>
 
@@ -41,4 +45,13 @@ contactForm.html只需要照ppt上的写就行，新增contactController、conta
 
 使用了jpa的设置可以直接把repositoryimpl删除了，对contact做了实体化，还需要把contactServiceAspect注释掉，不然无法在web界面正确显示添加的联系人信息，修改了controller的存储设置，使用repository存储到h2数据库。
 
+
+
 第六次作业：pom添加mongodb配置，下载mongodbshell，把上次作业的h2数据库撤销，为contact类添加@Document，记得改id为string，添加application.properties添加数据库链接。然后到mongodb的bin里使用cmd，先<mongod --dbpath 你的数据存放地址>开启监听，再打开mongosh（直接回车就行），这个时候运行contact，往里面添加数据即可。
+
+
+
+第七次作业：一上来就遇到问题，首先就是内存式mongodb依赖找不到。解决办法：添加版本号，需要和parent版本相符合这个得自己查。
+
+（其实是因为parent版本不一样导致的，跟他用一个版本的parent就行了）
+
