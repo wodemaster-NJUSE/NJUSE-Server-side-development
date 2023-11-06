@@ -6,5 +6,12 @@ public interface ContactService {
     List<Contact> getAll();
 
     void setCache(List<Contact>cache);
-    void add(Contact contact);
+    Contact add(Contact contact);
+
+
+    Contact findById(Long id);
+
+
+
+    void delete(Long id);
 }

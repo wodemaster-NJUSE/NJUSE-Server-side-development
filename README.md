@@ -41,3 +41,4 @@ contactForm.html只需要照ppt上的写就行，新增contactController、conta
 
 使用了jpa的设置可以直接把repositoryimpl删除了，对contact做了实体化，还需要把contactServiceAspect注释掉，不然无法在web界面正确显示添加的联系人信息，修改了controller的存储设置，使用repository存储到h2数据库。
 
+第八次作业：只需要照着所给代码实现就行，注意url对齐，基于第五次作业完成

@@ -1,51 +1,64 @@
 package contact;
 
-import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Slf4j
-@Controller
+@RestController
+@RequestMapping("/api")
 public class ContactController {
 
     private final ContactService contactService;
 
-    // Inject ContactService via constructor
     public ContactController(ContactService contactService) {
         this.contactService = contactService;
     }
-    //    需要用’/‘指定根页面，输入’localhost:8080‘就可以访问页面了
-    @GetMapping("/")
-    public String showContacts() {
-        return "contactForm";
-    }
-    @ModelAttribute("contact")
-    public Contact contact() {
-        return new Contact();
+
+    @GetMapping("/contacts")
+    public Iterable<Contact> getAllContacts() {
+        return contactService.getAll();
     }
 
-    @PostMapping("/addContact")
-    public String submitContactForm(
-            @Valid @ModelAttribute("contact") Contact contact,
-            BindingResult bindingResult,
-            Model model) {
-        log.info(String.valueOf(bindingResult.hasErrors()));
-        if (!bindingResult.hasErrors()) {
-            contactService.add(contact); // Save to the database
-            model.addAttribute("contacts", contactService.getAll()); // Retrieve from the database
-            model.addAttribute("contact", new Contact()); // Clear the form
+    @GetMapping("/contact/{id}")
+    public ResponseEntity<Contact> getContactById(@PathVariable Long id) {
+        Contact contact = contactService.findById(id);
+        if (contact != null) {
+            return new ResponseEntity<>(contact, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return "contactForm";
     }
 
-    @GetMapping("/showContacts") // Change the mapping to "/contacts/showContacts"
-    public String show(Model model) {
-        model.addAttribute("contacts", contactService.getAll());
-        return "contactForm";
+    @PostMapping(path = "/contact", consumes="application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Contact createContact(@RequestBody Contact contact) {
+        return contactService.add(contact);
+    }
+
+    @PutMapping(path="/contact/{id}", consumes="application/json")
+    public Contact updateContact(@PathVariable Long id, @RequestBody Contact contactDetails) {
+        Contact contact = contactService.findById(id);
+        if (contact != null) {
+            contact.setFirstName(contactDetails.getFirstName());
+            contact.setLastName(contactDetails.getLastName());
+            contact.setPhoneNumber(contactDetails.getPhoneNumber());
+            contact.setEmailAddress(contactDetails.getEmailAddress());
+            // Update other fields accordingly
+
+            return contactService.add(contact);
+        } else {
+            return null;
+        }
+    }
+
+    @DeleteMapping("/contact/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteContact(@PathVariable Long id) {
+        try {
+            contactService.delete(id);
+        } catch (EmptyResultDataAccessException e) {
+            // Do nothing
+        }
     }
 }
